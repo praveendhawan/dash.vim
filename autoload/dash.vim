@@ -119,7 +119,12 @@ function! s:search(term, keywords) "{{{
     let activation = ''
   endif
   let url = 'dash-plugin://' . shellescape(keys . query . activation)
-  silent execute '!open -g ' . url
+  if (executable(wslview) == 1)
+    let open_program = wslview
+  else
+    let open_program = open
+  endif
+  silent execute '!' . open_program . ' -g ' . url
   redraw!
 endfunction
 "}}}
